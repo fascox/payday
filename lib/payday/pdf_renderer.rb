@@ -77,7 +77,7 @@ module Payday
 
         # render the company details
         table_data = []
-        table_data << [bold_cell(pdf, invoice_or_default(invoice, :company_name).strip, :size => 12)]
+        table_data << [bold_cell(pdf, invoice_or_default(invoice, :company_name).strip, :size => 16)]
 
         invoice_or_default(invoice, :company_details).lines.each { |line| table_data << [line] }
 
@@ -166,6 +166,9 @@ module Payday
             bold_cell(pdf, I18n.t('payday.line_item.unit_price', :default => "Unit Price"), :align => :center, :borders => []),
             bold_cell(pdf, I18n.t('payday.line_item.quantity', :default => "Quantity"), :align => :center, :borders => []),
             bold_cell(pdf, I18n.t('payday.line_item.amount', :default => "Amount"), :align => :center, :borders => [])]
+        
+        # fascox patch
+        pdf.font_size(8)
         invoice.line_items.each do |line|
           table_data << [line.description,
                          (line.display_price || number_to_currency(line.price, invoice)),
